@@ -16,7 +16,7 @@ spec:
         kubernetes.io/hostname: worker02
       containers:
       - name: demo
-        image: demo:v1
-        imagePullPolicy: IfNotPresent
+        image: harbor.lanhaoyuan.top/demo/demo:v1
+        imagePullPolicy: Always
         ports:
         - containerPort: 80

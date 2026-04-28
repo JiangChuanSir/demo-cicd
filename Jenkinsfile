@@ -1,8 +1,11 @@
 pipeline {
     agent any
-
+    environment {
+        HARBOR_URL = 'harbor.lanhaoyuan.top'
+        IMAGE_NAME = 'demo/demo'
+        IMAGE_TAG = 'v1'
+    }
     stages {
-
         stage('Debug Env') {
             steps {
                 sh 'id'
@@ -13,7 +16,6 @@ pipeline {
                 sh 'docker version || true'
             }
         }
-
         stage('Clone') {
             steps {
                 git url: 'git@github.com:JiangChuanSir/demo-cicd.git',
@@ -21,13 +23,17 @@ pipeline {
                     branch: 'main'
             }
         }
-
         stage('Build Image') {
             steps {
-                sh 'docker build -t demo:v1 .'
+                sh "docker build -t ${HARBOR_URL}/${IMAGE_NAME}:${IMAGE_TAG} ."
             }
         }
-
+        stage('Push Image') {
+            steps {
+                sh "docker login ${HARBOR_URL} -u admin -p Harbor12345"
+                sh "docker push ${HARBOR_URL}/${IMAGE_NAME}:${IMAGE_TAG}"
+            }
+        }
         stage('Deploy to K8s') {
             steps {
                 sh 'kubectl apply -f k8s/'
