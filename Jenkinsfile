@@ -30,7 +30,7 @@ pipeline {
         }
         stage('Push Image') {
             steps {
-                sh "docker login ${HARBOR_URL} -u admin -p Harbor12345"
+                sh "docker login ${HARBOR_URL} -u admin -p 123"
                 sh "docker push ${HARBOR_URL}/${IMAGE_NAME}:${IMAGE_TAG}"
             }
         }
