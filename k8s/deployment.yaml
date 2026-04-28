@@ -13,7 +13,7 @@ spec:
         app: demo
     spec:
       imagePullSecrets:
-      -name: harbor-secret
+      - name: harbor-secret
       containers:
       - name: demo
         image: harbor.lanhaoyuan.top/demo/demo:v1
