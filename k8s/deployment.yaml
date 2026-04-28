@@ -12,8 +12,11 @@ spec:
       labels:
         app: demo
     spec:
+      nodeSelector:
+        kubernetes.io/hostname: worker02
       containers:
       - name: demo
         image: demo:v1
+        imagePullPolicy: IfNotPresent
         ports:
         - containerPort: 80
